@@ -53,6 +53,7 @@ export function NavigationArrow({onClick, transition, left, top, icon, speed = -
                      '--top': top,
                      zIndex: 1,
                      pointerEvents: 'auto',
+                     cursor: 'pointer',
                  } as CSSProperties}>
                 <FontAwesomeIcon icon={icon}/>
             </div>

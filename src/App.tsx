@@ -1,44 +1,62 @@
 import {useEffect, useRef, useState} from 'react'
 import {Parallax, ParallaxLayer, IParallax} from '@react-spring/parallax'
 import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons'
-import './App.css'
-import './tailwind-output.css'
 import {ImageLayer, url, NavigationArrow, StarsBackground} from "./BackgroundUtils.tsx";
+import {FilterButton, Log, LogContainer} from "./Logs.tsx";
+import './tailwind-output.css'
+import './App.css'
 
 export default function App() {
     const parallaxRef = useRef<IParallax>(null!)
     let index = useRef(0);
     let [lastScroll, setLastScroll] = useState(false); // true = down, false = up
-    // let setLastScrollRef = useRef(setLastScroll) // So that we can use it inside the event listener
-    // let [moving, setMoving] = useState(false);
+    let setLastScrollRef = useRef(setLastScroll) // So that we can use it inside the event listener
 
     const scrollToPrevious = () => {
+        index.current = Math.ceil(index.current);
         index.current = (index.current - 1 + 3) % 3
         setLastScroll(index.current === 2);
         parallaxRef.current.scrollTo(index.current)
     }
 
     const scrollToNext = () => {
+        index.current = Math.floor(index.current);
         index.current = (index.current + 1) % 3
         setLastScroll(index.current !== 0);
         parallaxRef.current.scrollTo(index.current)
     }
 
     useEffect(() => {
-        // let lastScroll = 0
-        const handleWheelEvent = (event: WheelEvent) => {
-            event.preventDefault()
-            // if (parallaxRef.current.current > lastScroll) {
-            //     setLastScrollRef.current(true)
-            // } else if (parallaxRef.current.current < lastScroll) {
-            //     setLastScrollRef.current(false)
-            // }
-            // lastScroll = parallaxRef.current.current
+        let lastScroll = 0
+        const handleWheelEvent = () => {
+            if (parallaxRef.current.current > lastScroll) {
+                setLastScrollRef.current(true)
+            } else if (parallaxRef.current.current < lastScroll) {
+                setLastScrollRef.current(false)
+            }
+            lastScroll = parallaxRef.current.current
+            index.current = parallaxRef.current.current / (visualViewport?.height || 1);
+
         };
 
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+                event.preventDefault()
+                if (event.key === 'ArrowUp') {
+                    scrollToPrevious()
+                } else {
+                    scrollToNext()
+                }
+            }
+
+        }
+
         window.addEventListener('wheel', handleWheelEvent, {passive: false});
+        // keyboard events: arrow up
+        window.addEventListener('keydown', handleKeyDown, {passive: false});
         return () => {
             window.removeEventListener('wheel', handleWheelEvent);
+            window.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
 
@@ -92,151 +110,30 @@ export default function App() {
                 </ParallaxLayer>
 
                 <ParallaxLayer offset={1.1} speed={.5}>
-                    <div className={'log-container'}>
-                        <div className={'logs-background'}></div>
-                        <div className={'logs'}>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                            <div role="alert" className="alert alert-success" style={{boxShadow: '2px 2px 5px black'}}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6 shrink-0 stroke-current"
-                                    fill="none"
-                                    viewBox="0 0 24 24">
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span>Your purchase has been confirmed!</span>
-                            </div>
-                        </div>
-                    </div>
+                    <LogContainer>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'error'} content={'Warning message'}/>
+                        <Log type={'warning'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'error'} content={'Warning message'}/>
+                        <Log type={'warning'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'error'} content={'Warning message'}/>
+                        <Log type={'warning'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'success'} content={'Warning message'}/>
+                        <Log type={'error'} content={'Warning message'}/>
+                        <Log type={'warning'} content={'Warning message'}/>
+                    </LogContainer>
+                </ParallaxLayer>
+
+                <ParallaxLayer offset={1} speed={.9} style={{ pointerEvents: 'none' }}>
+                    <FilterButton/>
                 </ParallaxLayer>
             </Parallax>
         </div>
