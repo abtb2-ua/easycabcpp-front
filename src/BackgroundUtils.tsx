@@ -14,12 +14,12 @@ interface StarsBackgroundProps {
     factor: number;
 }
 
-export function StarsBackground({offset = 0, speed = 0, factor}: StarsBackgroundProps) {
+export function StarsBackground(props: StarsBackgroundProps) {
     return (
         <ParallaxLayer
-            offset={offset}
-            speed={speed}
-            factor={factor}
+            offset={props.offset ?? 0}
+            speed={props.speed ?? 0}
+            factor={props.factor}
             style={{
                 backgroundImage: url('stars', true),
                 backgroundSize: 'cover',
@@ -39,23 +39,23 @@ interface NavigationArrowProps {
     size?: number;
 }
 
-export function NavigationArrow({onClick, transition, left, top, icon, speed = -1, size = 110}: NavigationArrowProps) {
+export function NavigationArrow(props: NavigationArrowProps) {
     return (
         <ParallaxLayer
             offset={0}
-            speed={speed}
-            style={{userSelect: 'none', transition: `${transition}s`, zIndex: 1, pointerEvents: 'none'}}
+            speed={props.speed ?? -1}
+            style={{userSelect: 'none', transition: `${props.transition}s`, zIndex: 1, pointerEvents: 'none'}}
         >
-            <div className={'nav-arrow'} onClick={onClick}
+            <div className={'nav-arrow'} onClick={props.onClick}
                  style={{
-                     '--size': `${size}px`,
-                     '--left': left,
-                     '--top': top,
+                     '--size': `${props.size ?? 110}px`,
+                     '--left': props.left,
+                     '--top': props.top,
                      zIndex: 1,
                      pointerEvents: 'auto',
                      cursor: 'pointer',
                  } as CSSProperties}>
-                <FontAwesomeIcon icon={icon}/>
+                <FontAwesomeIcon icon={props.icon}/>
             </div>
         </ParallaxLayer>
     )
@@ -71,10 +71,37 @@ interface ImageLayerProps {
     extraStyles?: CSSProperties;
 }
 
-export function ImageLayer({src, offset, speed, width, marginLeft, extraStyles, opacity = 1}: ImageLayerProps) {
+export function ImageLayer(props: ImageLayerProps) {
     return (
-        <ParallaxLayer offset={offset} speed={speed} style={{pointerEvents: 'none'}}>
-            <img alt={src} src={src} style={{display: 'block', width: width, marginLeft: marginLeft, opacity: opacity, ...extraStyles}}/>
+        <ParallaxLayer offset={props.offset} speed={props.speed} style={{pointerEvents: 'none'}}>
+            <img alt={props.src} src={props.src} className={'wobbly'}
+                 style={{
+                     display: 'block',
+                     width: props.width,
+                     marginLeft: props.marginLeft,
+                     opacity: props.opacity ?? 1,
+                     ...props.extraStyles
+                 }}/>
         </ParallaxLayer>
+    )
+}
+
+interface CloudProps {
+    width: string;
+    duration: string;
+    delay: string;
+    extraStyles?: CSSProperties;
+}
+
+export function Cloud(props: CloudProps) {
+    return (
+        <img alt={'cloud'} src={url('cloud')} className={'animate'}
+             style={{
+                 "--width": props.width,
+                 animationDuration: props.duration,
+                 animationDelay: props.delay,
+                 ...props.extraStyles,
+             } as CSSProperties}
+        />
     )
 }

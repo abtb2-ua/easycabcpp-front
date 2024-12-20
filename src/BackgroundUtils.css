@@ -23,3 +23,22 @@
     mix-blend-mode: lighten;
     color: rgb(37, 50, 55);
 }
+
+.wobbly {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% {
+        filter: drop-shadow(0 5px 25px rgba(0,0,0,0.6));
+        transform: translate(0px, 0px) rotate(-1.5deg);
+    }
+    50% {
+        filter: drop-shadow(0 25px 25px rgba(0,0,0,0.2));
+        transform: translate(5px, -20px) rotate(1.5deg);
+    }
+    100% {
+        filter: drop-shadow(0 5px 25px rgba(0,0,0,0.6));
+        transform: translate(0, 0) rotate(-1.5deg);
+    }
+}

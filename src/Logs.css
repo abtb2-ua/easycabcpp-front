@@ -12,7 +12,7 @@
 
 .logs-background {
     width: 850px;
-    height: 700px;
+    height: 80vh;
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 50px;
     backdrop-filter: blur(10px);
@@ -25,8 +25,7 @@
 
 .logs {
     width: 830px;
-    height: 660px;
-    align-content: end;
+    height: calc(80vh - 40px);
     padding: 10px 20px;
     gap: 20px;
     display: flex;
@@ -47,9 +46,11 @@
 }
 
 .container {
+    justify-content: center;
     pointer-events: auto;
     display: flex;
     align-items: center;
+    z-index: 2;
 }
 
 .item {
@@ -63,9 +64,15 @@
 .dropdown-content {
     max-height: 250px;
     height: auto;
-    max-width: 125px;
-    display: flex;
-    flex-wrap: nowrap
+    max-width: 150px;
+    flex-wrap: nowrap !important;
+    box-shadow: 0 0 4px gainsboro;
+}
+
+.dropdown-content .scroll-section {
+    scrollbar-width: auto !important;
+    height: auto;
+    overflow-y: auto;
 }
 
 .dropdown-item {
@@ -81,6 +88,7 @@
 
 .hamburger {
     cursor: pointer;
+    overflow: hidden;
 }
 
 .hamburger input {
@@ -116,4 +124,9 @@
 .hamburger input:checked + svg .line-top-bottom {
     stroke-dasharray: 20 300;
     stroke-dashoffset: -32.42;
+}
+
+.disabled {
+    filter: grayscale(.5);
+    pointer-events: none;
 }
