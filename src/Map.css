@@ -1,0 +1,140 @@
+/*.map {*/
+/*    width: 1200px;*/
+/*    height: 800px;*/
+/*    background-color: red;*/
+/*    display: grid;*/
+/*    grid-template-columns: repeat(20, 1fr);*/
+/*    grid-template-rows: repeat(20, 1fr);*/
+/*    gap: 5px*/
+/*}*/
+
+/*.map-item {*/
+/*    display: flex;*/
+/*    !*background-color: blue;*!*/
+/*    font-size: 32px;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
+.map-container {
+    width: 100%;
+    height: 100%;
+
+    --width: 900px;
+    --height: 600px;
+    /* height: calc(100vh - var(--menu-width)); */
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.5s ease-in-out;
+    pointer-events: auto;
+}
+
+.map-border {
+    width: 1200px;
+    height: 800px;
+
+    border-radius: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* background-color: red; */
+    background: linear-gradient(to top right, rgb(40, 192, 131), rgb(179, 87, 209));
+}
+
+.map, .map-item-borders {
+    position: absolute;
+    width: 1190px;
+    height: 790px;
+
+    padding: 10px;
+    border-radius: 20px;
+
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    gap: 6px;
+
+}
+.map {
+}
+
+.map-item-borders {
+    background: linear-gradient(to top right, rgb(159, 255, 217), rgb(231, 158, 255));
+    mix-blend-mode: lighten;
+}
+
+.map-item-border {
+    border-color: black;
+    border-radius: 5px;
+    border-width: 4px;
+    border-style: solid;
+}
+
+.map-item {
+    display: flex;
+    position: relative;
+    align-items: center;
+
+    border-color: transparent;
+    border-radius: 5px;
+    border-width: 4px;
+    border-style: solid;
+    color: #253237;
+
+    transition: 0.125s;
+}
+
+.map-item span {
+    width: 100%;
+
+    text-align: center;
+
+    font-weight: 600;
+    font-size: 16px;
+    font-family: 'Roboto Condensed', sans-serif;
+
+    user-select: none;
+}
+
+.customer,
+.location,
+.taxi,
+.taxiStopped {
+    box-shadow: 1px 1px 5px 0px black;
+}
+
+
+.customer:hover,
+.location:hover,
+.taxi:hover,
+.taxiStopped:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 2px 2px 5px 2px black;
+}
+
+.customer {
+    border-color: rgb(175 152 56);
+    background-color: rgb(255 255 210);
+}
+
+.location {
+    border-color: rgb(55 116 191);
+    background-color: rgb(158 200 237);
+}
+.taxi {
+    border-color: rgb(40 142 40);
+    background-color: rgb(141 218 154);
+}
+
+.taxiStopped {
+    border-color: #ab1c19;
+    background-color: rgb(220 164 164);
+}

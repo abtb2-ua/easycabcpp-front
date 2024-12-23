@@ -1,0 +1,17 @@
+
+
+.wrapper {
+    width: 90%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    justify-content: center;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+}
